@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3Ma Capital — Alpha Foundry</title>
+  <link rel="stylesheet" href="/src/styles/tokens.css" />
+  <style>
+    /* critical hero CSS — keeps first paint light */
+    html,body{margin:0;background:#0a0a0c;color:#f4f4f5;overflow-x:hidden}
+    #app{opacity:0} /* forge owns the first reveal */
+  </style>
+</head>
+<body>
+  <canvas id="fluid" aria-hidden="true"></canvas>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
