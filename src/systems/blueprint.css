@@ -1,0 +1,44 @@
+/* Blueprint decoration system — engineering/foundry aesthetic.
+   Reusable frame (drawn-in border edges), corner brackets, ghost numerals,
+   tick rulers, and a global scroll spine. All decorative; pointer-events:none. */
+
+/* --- section frame --------------------------------------------------------- */
+.bp-frame { position: absolute; inset: var(--space-3); z-index: 0; pointer-events: none; }
+.bp-edge { position: absolute; background: var(--line); transform-origin: center; }
+.bp-edge.top    { top: 0; left: 0; right: 0; height: 1px; transform: scaleX(0); transform-origin: left; }
+.bp-edge.bottom { bottom: 0; left: 0; right: 0; height: 1px; transform: scaleX(0); transform-origin: right; }
+.bp-edge.left   { top: 0; bottom: 0; left: 0; width: 1px; transform: scaleY(0); transform-origin: top; }
+.bp-edge.right  { top: 0; bottom: 0; right: 0; width: 1px; transform: scaleY(0); transform-origin: bottom; }
+
+/* --- corner brackets ------------------------------------------------------- */
+.bp-corner { position: absolute; width: 14px; height: 14px; border: 1px solid var(--ember-soft); opacity: 0; }
+.bp-corner.tl { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.bp-corner.tr { top: -1px; right: -1px; border-left: 0; border-bottom: 0; }
+.bp-corner.bl { bottom: -1px; left: -1px; border-right: 0; border-top: 0; }
+.bp-corner.br { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+
+/* --- ghost numeral --------------------------------------------------------- */
+.bp-ghost {
+  position: absolute; top: -0.18em; right: 0.1em; z-index: 0; pointer-events: none;
+  font-family: var(--font-display); font-weight: 700; line-height: 0.8;
+  font-size: clamp(6rem, 22vw, 18rem);
+  color: transparent; -webkit-text-stroke: 1px var(--white-18); text-stroke: 1px var(--white-18);
+  opacity: 0; letter-spacing: -0.04em; user-select: none;
+}
+
+/* --- tick ruler (top-left of a frame) -------------------------------------- */
+.bp-ticks { position: absolute; top: 6px; left: 8px; display: flex; gap: 4px; opacity: 0; z-index: 0; }
+.bp-ticks i { display: block; width: 1px; height: 7px; background: var(--white-18); }
+.bp-ticks i:nth-child(5n+1) { height: 12px; background: var(--ember-soft); }
+
+/* --- global scroll spine --------------------------------------------------- */
+.bp-spine { position: fixed; top: 0; bottom: 0; left: 18px; width: 1px; background: var(--line); z-index: 20; pointer-events: none; opacity: 0; }
+.bp-spine > i { position: absolute; top: 0; left: 0; right: 0; height: 100%; background: linear-gradient(180deg, var(--ember), var(--ember-soft)); transform: scaleY(0); transform-origin: top; }
+.bp-spine .knob { position: fixed; left: 14px; width: 9px; height: 9px; border: 1px solid var(--ember); background: var(--void); transform: rotate(45deg) translateY(-50%); }
+
+@media (max-width: 640px) { .bp-spine, .bp-ghost { display: none; } .bp-frame { inset: var(--space-2); } }
+@media (prefers-reduced-motion: reduce) {
+  .bp-edge { transform: none !important; }
+  .bp-corner, .bp-ticks { opacity: 1 !important; }
+  .bp-ghost { opacity: 1 !important; }
+}

@@ -1,5 +1,9 @@
 .forge-stage { position: fixed; inset: 0; display: grid; place-items: center; z-index: 50; background: var(--void); }
 .forge-stage canvas { position:absolute; inset:0; }
+.forge-mark { position: relative; display: grid; place-items: center; gap: var(--space-3); text-align: center; }
 .glyph { font-family: var(--font-display); font-size: clamp(3rem, 12vw, 9rem); letter-spacing: -0.04em; color: var(--text);
   opacity: 0; }
 .glyph.dim { color: var(--white-60); }
+.forge-tagline { font-family: var(--font-mono); font-size: clamp(10px, 1.4vw, 13px); letter-spacing: 0.5em;
+  color: var(--ember); text-indent: 0.5em; opacity: 0; }
+@media (prefers-reduced-motion: reduce) { .forge-tagline { opacity: 1; letter-spacing: 0.4em; transition: opacity .6s ease; } }

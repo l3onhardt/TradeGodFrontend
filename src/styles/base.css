@@ -13,6 +13,26 @@ body {
 #fluid { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 #app { position: relative; z-index: 1; }
 
+/* Blueprint grid layer — always on (even where WebGL fluid never mounts).
+   Two superimposed gradients = fine + coarse grid; plus a centered glow and a
+   bottom warm wash so the page never reads as a flat void. */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px, 64px 64px;
+  -webkit-mask-image: radial-gradient(circle at 50% 38%, #000 0%, transparent 78%);
+  mask-image: radial-gradient(circle at 50% 38%, #000 0%, transparent 78%);
+  opacity: 0.5;
+}
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(900px 600px at 50% 0%, rgba(212,175,120,0.06), transparent 70%),
+    radial-gradient(700px 500px at 50% 100%, rgba(212,175,120,0.05), transparent 70%);
+}
+
 .display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.02em; }
 .mono { font-family: var(--font-mono); font-feature-settings: "tnum" 1; }
 .ember { color: var(--ember); }

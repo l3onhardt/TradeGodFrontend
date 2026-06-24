@@ -1,4 +1,5 @@
 import './sections.css';
+import { frameSection } from '../systems/blueprint';
 
 const LINES = [
   '我们不是在猜价格。',
@@ -16,8 +17,11 @@ export function mountManifesto(host: HTMLElement): HTMLElement {
   sec.id = 'manifesto';
   sec.innerHTML =
     '<p class="section-eyebrow">01 — MANIFESTO</p>' +
-    LINES.map((l) => `<span class="line"><span data-line>${escapeHtml(l)}</span></span>`).join('');
+    '<div class="manifesto-body display">' +
+    LINES.map((l) => `<span class="line"><span data-line>${escapeHtml(l)}</span></span>`).join('') +
+    '</div>';
   host.appendChild(sec);
+  frameSection(sec, { numeral: '01', ticks: true });
   return sec;
 }
 

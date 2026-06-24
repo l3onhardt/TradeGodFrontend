@@ -1,6 +1,7 @@
 import { deriveFlags } from './lib/feature-flags';
 import { startSmoothScroll } from './lib/lenis-gsap';
 import { runForge } from './forge/forge';
+import { mountHero } from './sections/hero';
 import { mountManifesto } from './sections/manifesto';
 import { mountThesis } from './sections/thesis';
 import { mountEngine } from './sections/engine';
@@ -8,22 +9,25 @@ import { mountBooks } from './sections/books';
 import { mountTarget } from './sections/target';
 import { mountSoon } from './sections/soon';
 import { mountNav, LenisLike } from './systems/nav';
+import { mountSpine } from './systems/blueprint';
 import { wireReveals } from './sections/reveals';
 
 const app = document.getElementById('app')!;
 const flags = deriveFlags();
 
-[mountManifesto, mountThesis, mountEngine, mountBooks, mountTarget, mountSoon]
+[mountHero, mountManifesto, mountThesis, mountEngine, mountBooks, mountTarget, mountSoon]
   .forEach((m) => m(app));
 
 const lenis = startSmoothScroll();
 mountNav(app, lenis as unknown as LenisLike);
+mountSpine(app);
 wireReveals(app);
 
 // The forge owns the first ~3s. After it resolves, reveal the app and lazily mount the fluid background.
 // Three.js stays lazy: fluid-bg is dynamically imported only here, only on capable devices.
 void runForge(app, flags).done.then(async () => {
   app.style.opacity = '1';
+  document.dispatchEvent(new CustomEvent('forge:revealed'));
   if (!flags.reducedMotion) {
     try {
       const { mountFluidBg } = await import('./systems/fluid-bg');
