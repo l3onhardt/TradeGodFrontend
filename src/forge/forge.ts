@@ -11,7 +11,8 @@ export function runForge(host: HTMLElement, flags: Flags, deps: ForgeDeps = {}):
   glyph.setAttribute('data-forge', 'glyph');
   if (flags.reducedMotion) glyph.classList.add('dim');
   stage.appendChild(glyph);
-  host.appendChild(stage);
+  // stage is position:fixed — must live on body, not inside #app (which starts opacity:0)
+  document.body.appendChild(stage);
 
   let disposed = false;
   const untilDone = new Promise<void>(async (resolve) => {

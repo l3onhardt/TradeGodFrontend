@@ -13,12 +13,8 @@ describe('feature flags', () => {
     const f = deriveFlags(win({ navigator: { hardwareConcurrency: 2 } }));
     expect(f.lowEnd).toBe(true);
   });
-  it('lowEnd true when webgpu unavailable', () => {
+  it('lowEnd false regardless of webgpu (cpu count is the only signal)', () => {
     const f = deriveFlags(win({ navigator: { hardwareConcurrency: 8, gpu: undefined } }));
-    expect(f.lowEnd).toBe(true);
-  });
-  it('lowEnd false on capable device with webgpu', () => {
-    const f = deriveFlags(win({ navigator: { hardwareConcurrency: 8, gpu: {} } }));
     expect(f.lowEnd).toBe(false);
   });
   it('dprCapFor full = 1.5, lowEnd = 1.0', () => {

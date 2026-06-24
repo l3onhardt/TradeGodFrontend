@@ -15,7 +15,8 @@ describe('forge', () => {
     const ctrl = runForge(host, flags, { loadShader: async () => { fetchedThree = true; return {}; } });
     await ctrl.done;
     expect(fetchedThree).toBe(false);
-    expect(host.querySelector('[data-forge=glyph]')?.textContent).toContain('3MA');
+    // stage is appended to document.body (position:fixed must not inherit #app opacity:0)
+    expect(document.body.querySelector('[data-forge=glyph]')?.textContent).toContain('3MA');
     ctrl.dispose();
   });
 });

@@ -10,7 +10,8 @@ export function deriveFlags(w: Window = window): Flags {
   const reducedMotion = w.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
   const nav = w.navigator as Navigator & { gpu?: unknown };
   const webgpuAvailable = !!nav.gpu;
-  const lowEnd = (w.navigator.hardwareConcurrency ?? 8) < 4 || !webgpuAvailable;
+  // WebGPU support is near-zero in current browsers; use only CPU count as the lowEnd signal
+  const lowEnd = (w.navigator.hardwareConcurrency ?? 8) < 4;
   return { reducedMotion, lowEnd, webgpuAvailable, ...dprAndParticles(lowEnd) };
 }
 

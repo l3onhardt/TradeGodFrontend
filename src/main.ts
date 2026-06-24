@@ -24,7 +24,7 @@ wireReveals(app);
 // Three.js stays lazy: fluid-bg is dynamically imported only here, only on capable devices.
 void runForge(app, flags).done.then(async () => {
   app.style.opacity = '1';
-  if (!flags.reducedMotion && !flags.lowEnd) {
+  if (!flags.reducedMotion) {
     try {
       const { mountFluidBg } = await import('./systems/fluid-bg');
       mountFluidBg(flags);
