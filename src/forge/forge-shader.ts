@@ -6,11 +6,6 @@ import type { Flags } from '../lib/feature-flags';
 
 export interface ForgeScene { setPhase(p: number): void; dispose(): void }
 
-const EMBER = new THREE.Color(0xd4af78); // warm champagne
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _EMBER = EMBER; // referenced for clarity; emitted fragment color is hex #d4af78
-
 export async function createForgeScene(canvas: HTMLCanvasElement, flags: Flags): Promise<ForgeScene> {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, flags.dprCap));
