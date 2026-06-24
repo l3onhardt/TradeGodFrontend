@@ -21,14 +21,15 @@ mountNav(app, lenis as unknown as LenisLike);
 wireReveals(app);
 
 // The forge owns the first ~3s. After it resolves, reveal the app and lazily mount the fluid background.
-void runForge(app, flags).done.then(() => {
+// Three.js stays lazy: fluid-bg is dynamically imported only here, only on capable devices.
+void runForge(app, flags).done.then(async () => {
   app.style.opacity = '1';
   if (!flags.reducedMotion && !flags.lowEnd) {
-    // Task 15 supplies this module; tolerate its absence until T15 lands.
-    // Non-literal specifier keeps Rollup from statically resolving (and failing on)
-    // a module that doesn't exist yet. `catch` swallows the runtime import error.
-    const fluidPath = './systems/fluid-bg';
-    // @ts-expect-error — ./systems/fluid-bg does not exist until Task 15 lands
-    import(/* @vite-ignore */ fluidPath).then((m: { mountFluidBg: (f: typeof flags) => void }) => m.mountFluidBg(flags)).catch(() => {});
+    try {
+      const { mountFluidBg } = await import('./systems/fluid-bg');
+      mountFluidBg(flags);
+    } catch {
+      // shader unavailable — leave the CSS gradient fallback in base.css visible
+    }
   }
 });
