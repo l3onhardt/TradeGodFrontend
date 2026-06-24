@@ -1,22 +1,38 @@
 import './sections.css';
+import { frameSection } from '../systems/blueprint';
 
 export function mountThesis(host: HTMLElement): HTMLElement {
   const sec = document.createElement('section');
   sec.id = 'thesis';
   sec.innerHTML = `
     <p class="section-eyebrow">02 — THESIS</p>
-    <svg viewBox="0 0 700 220" width="100%" height="220" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-      <g data-ascii style="font-family:var(--font-mono);font-size:13px;fill:var(--white-45)">
-        <text x="10" y="40">旧路线  PerpRadar Agent</text>
-        <text x="10" y="70">信号库 ─▶ Agent 审阅 ─▶ 下单</text>
-        <text x="10" y="100">上限低 · 缺博弈敏感度</text>
-      </g>
-      <g data-ascii style="font-family:var(--font-mono);font-size:13px;fill:var(--ember)">
-        <text x="360" y="40">新路线  Alpha Foundry</text>
-        <text x="360" y="70">全市场传感器 ─▶ 证据黑板 ─▶ 战役引擎</text>
-        <text x="360" y="100">高凸性右尾 · 反身性 · 错配</text>
-      </g>
-    </svg>`;
+    <div class="thesis-grid">
+      <div class="route route-old" data-route="old">
+        <span class="route-tag mono">旧路线 · PerpRadar Agent</span>
+        <ol class="route-flow mono">
+          <li data-node>信号库</li>
+          <li data-node>Agent 审阅</li>
+          <li data-node>下单</li>
+        </ol>
+        <p class="route-note mono">上限低 · 缺博弈敏感度</p>
+        <svg class="route-strike" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <line data-strike x1="2" y1="6" x2="98" y2="94" stroke="var(--white-30)" stroke-width="0.6"/>
+        </svg>
+      </div>
+
+      <div class="thesis-vs mono" aria-hidden="true"><span data-vs>VS</span></div>
+
+      <div class="route route-new" data-route="new">
+        <span class="route-tag mono ember">新路线 · Alpha Foundry</span>
+        <ol class="route-flow mono">
+          <li data-node class="ember">全市场传感器</li>
+          <li data-node class="ember">证据黑板</li>
+          <li data-node class="ember">战役引擎</li>
+        </ol>
+        <p class="route-note mono ember">高凸性右尾 · 反身性 · 错配</p>
+      </div>
+    </div>`;
   host.appendChild(sec);
+  frameSection(sec, { numeral: '02' });
   return sec;
 }

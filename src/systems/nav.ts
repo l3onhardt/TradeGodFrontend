@@ -28,7 +28,7 @@ export function mountNav(app: HTMLElement, lenis: LenisLike): HTMLElement {
     nav.appendChild(a);
   });
   const join = document.createElement('a');
-  join.textContent = 'Join';
+  join.textContent = 'Contact';
   join.className = 'ember';
   join.href = '#soon';
   join.style.cssText = 'margin-left:auto;border:1px solid var(--ember);padding:2px 10px;border-radius:3px;text-decoration:none';

@@ -2,6 +2,7 @@ import './sections.css';
 import jelly from '../terminal/replays/jelly.json';
 import { renderTerminal } from '../terminal/terminal';
 import { deriveFlags } from '../lib/feature-flags';
+import { frameSection } from '../systems/blueprint';
 
 const PILLARS: Array<[string, string]> = [
   ['黑板 + Attention Router', '结构化证据黑板，注意力动态分配推理与抓取预算'],
@@ -16,22 +17,33 @@ export function mountEngine(host: HTMLElement): HTMLElement {
   sec.id = 'engine';
   sec.innerHTML = `
     <p class="section-eyebrow">03 — ENGINE</p>
-    <div style="display:flex;gap:var(--space-4);flex-wrap:wrap">
-      <div class="pillars" style="flex:1;min-width:280px"></div>
-      <div class="term-host" style="flex:1;min-width:320px"></div>
+    <svg class="engine-schematic" viewBox="0 0 640 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <g class="es-node" data-es><rect x="8" y="34" width="120" height="28" rx="2"/><text x="68" y="52">SENSORS</text></g>
+      <g class="es-node" data-es><rect x="200" y="20" width="140" height="56" rx="2" class="es-core"/><text x="270" y="44">BLACKBOARD</text><text x="270" y="60" class="es-sub">attention router</text></g>
+      <g class="es-node" data-es><rect x="412" y="34" width="120" height="28" rx="2"/><text x="472" y="52">CAMPAIGN</text></g>
+      <g class="es-node" data-es><rect x="556" y="34" width="76" height="28" rx="2"/><text x="594" y="52">RISK</text></g>
+      <path class="es-link" data-es-link d="M128 48 H200"/>
+      <path class="es-link" data-es-link d="M340 48 H412"/>
+      <path class="es-link" data-es-link d="M532 48 H556"/>
+    </svg>
+    <div class="engine-cols">
+      <div class="pillars"></div>
+      <div class="term-host"></div>
     </div>`;
 
   const list = sec.querySelector('.pillars') as HTMLElement;
-  PILLARS.forEach(([title, desc]) => {
+  PILLARS.forEach(([title, desc], i) => {
     const row = document.createElement('div');
-    row.style.cssText = 'border-top:1px solid var(--line);padding:var(--space-2) 0';
+    row.className = 'pillar-row';
     row.innerHTML =
-      `<dt class="ember" style="font-size:14px;font-weight:600;font-family:var(--font-display)">${escapeText(title)}</dt>` +
-      `<dd style="color:var(--white-60);margin:4px 0 0 0;font-size:14px">${escapeText(desc)}</dd>`;
+      `<span class="pillar-idx mono">P${i + 1}</span>` +
+      `<div><dt class="ember">${escapeText(title)}</dt>` +
+      `<dd>${escapeText(desc)}</dd></div>`;
     list.appendChild(row);
   });
 
   host.appendChild(sec);
+  frameSection(sec, { numeral: '03' });
   return sec;
 }
 
