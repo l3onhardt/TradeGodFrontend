@@ -1,4 +1,5 @@
 import './forge.css';
+import { gsap } from 'gsap';
 import type { Flags } from '../lib/feature-flags';
 
 export interface ForgeDeps { loadShader?: () => Promise<unknown> }
@@ -25,12 +26,35 @@ export function runForge(host: HTMLElement, flags: Flags, deps: ForgeDeps = {}):
       resolve();
       return;
     }
-    // Full shader path (Task 9): canvas + shader, lazy import.
+
+    // Full shader path: Three.js lazily imported here (reduced path never enters this).
     if (deps.loadShader) await deps.loadShader();
-    // Placeholder timeline; Task 9 replaces this body with a real GSAP timeline.
-    await delay(2800); glyph.style.opacity = '1';
-    await delay(220);
-    await unload(stage); resolve();
+    const canvas = document.createElement('canvas');
+    stage.insertBefore(canvas, glyph); // glyph on top
+    const surface = await (await import('./forge-shader')).createForgeScene(canvas, flags);
+
+    const phase = { p: 0 };
+    let didCleanup = false;
+    const fullDone = new Promise<void>((r) => {
+      const tl = gsap.timeline({
+        onComplete() {
+          if (!didCleanup) {
+            didCleanup = true;
+            surface.dispose();
+            canvas.remove();
+            r();
+          }
+        },
+      });
+      tl.set(stage, { autoAlpha: 1 })
+        .to(phase, { p: 0.6, duration: 1.5, ease: 'power1.inOut', onUpdate() { surface.setPhase(phase.p); } }, 0)
+        .to(phase, { p: 1.0, duration: 1.0, ease: 'power2.in', onUpdate() { surface.setPhase(phase.p); } }, 0.3)
+        .to(glyph, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 2.4)  // glyph crystallizes
+        .to(stage, { autoAlpha: 0, duration: 0.2, ease: 'power2.in' }, 2.8);
+    });
+    await fullDone;
+    await unload(stage);
+    resolve();
   });
 
   // Reconciliation (b): unload only fades the stage to opacity:0 (no removal).
