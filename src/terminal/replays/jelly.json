@@ -1,0 +1,19 @@
+{
+  "campaign": {
+    "campaign_id": "0xJELLY-25Q1",
+    "asset": "JELLYJELLY-PERP",
+    "playbook": "REFLEXIVE_SHORT_SQUEEZE",
+    "risk_box": { "max_notional_usd": 250000, "max_loss_pct": 8, "adl_defense": true },
+    "invalidation": "depth restored > 60% of OI",
+    "pnl_pct_at_close": 31.2
+  },
+  "evidence": [
+    { "t_ms": 0,     "evidence_id": "0xj01", "source_channel": "EVENT_NEWS",      "confidence": "HIGH", "claim": "binance listing window T-18m",        "metric_kv": {}, "ts": "T-18m" },
+    { "t_ms": 2000,  "evidence_id": "0xj02", "source_channel": "EVENT_NEWS",      "confidence": "HIGH", "claim": "184M pos vs 12M book depth",         "metric_kv": { "pos": "184M", "depth": "12M" }, "ts": "T-16m" },
+    { "t_ms": 4000,  "evidence_id": "0xj03", "source_channel": "ONCHAIN_DEX",    "confidence": "MED",  "claim": "MMs short-biased",                    "metric_kv": {}, "ts": "T-14m" },
+    { "t_ms": 6000,  "evidence_id": "0xj04", "source_channel": "CROSS_VENUE",    "confidence": "MED",  "claim": "OI 2.4x open-interest base",          "metric_kv": { "oi_multiple": "2.4x" }, "ts": "T-12m" },
+    { "t_ms": 8000,  "evidence_id": "0xj05", "source_channel": "SOCIAL_KOL",     "confidence": "LOW",  "claim": "KOL velocity low (not social event)","metric_kv": {}, "ts": "T-10m" },
+    { "t_ms": 10000, "evidence_id": "0xj06", "source_channel": "MICROSTRUCTURE", "confidence": "HIGH", "claim": "book thinning stops, basis widens",  "metric_kv": {}, "ts": "T-8m" },
+    { "t_ms": 14000, "evidence_id": "0xj07", "source_channel": "ONCHAIN_DEX",    "confidence": "HIGH", "claim": "depth restored > 60% OI",             "metric_kv": {}, "ts": "T+0m", "invalidates": true }
+  ]
+}
