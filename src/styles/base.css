@@ -1,0 +1,22 @@
+@import './tokens.css';
+
+* { box-sizing: border-box; }
+html { scroll-behavior: auto; }
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+#fluid { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+#app { position: relative; z-index: 1; }
+
+.display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.02em; }
+.mono { font-family: var(--font-mono); font-feature-settings: "tnum" 1; }
+.ember { color: var(--ember); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
