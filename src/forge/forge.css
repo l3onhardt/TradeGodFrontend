@@ -1,0 +1,5 @@
+.forge-stage { position: fixed; inset: 0; display: grid; place-items: center; z-index: 50; background: var(--void); }
+.forge-stage canvas { position:absolute; inset:0; }
+.glyph { font-family: var(--font-display); font-size: clamp(3rem, 12vw, 9rem); letter-spacing: -0.04em; color: var(--text);
+  opacity: 0; }
+.glyph.dim { color: var(--white-60); }
