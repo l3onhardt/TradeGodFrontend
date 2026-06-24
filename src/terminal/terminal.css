@@ -1,0 +1,13 @@
+.term { background: rgba(10,10,12,0.66); backdrop-filter: blur(12px);
+  border: 1px solid var(--line); font-family: var(--font-mono);
+  color: var(--white-85); padding: var(--space-4); font-size: 13px; line-height: 1.7; }
+.term .row { padding: var(--space-2) 0; border-bottom: 1px solid var(--line); }
+.term .lbl { color: var(--white-30); font-size: 10px; letter-spacing: 0.2em; }
+.term .pill { color: var(--ember); border: 1px solid var(--ember-soft);
+  padding: 1px 6px; border-radius: 3px; font-size: 10px; }
+.term .med { color: var(--white-60); }
+.term .state-cur { color: var(--text); font-weight: 700; }
+.term .state-dim { color: var(--white-30); font-weight: 400; }
+.term .arrow { color: var(--ember); }
+.term .seed { color: var(--white-30); letter-spacing: 0.2em; }
+.term .dim { color: var(--white-18); }
