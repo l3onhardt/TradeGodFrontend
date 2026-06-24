@@ -1,0 +1,6 @@
+section { position: relative; max-width: var(--maxw); margin: 0 auto;
+  padding: var(--space-6) var(--space-4); z-index: 1; }
+.section-eyebrow { color: var(--white-30); font-size: 12px; letter-spacing: 0.25em; }
+.line { display: block; overflow: hidden; }
+.line > span { display: block; transform: translateY(110%); }
+@media (prefers-reduced-motion: reduce) { .line > span { transform: none; } }
